@@ -1,6 +1,9 @@
 from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://wo:pw@localhost:5432/project_tracker'
+
 
 @app.route("/")
 def show_project():
