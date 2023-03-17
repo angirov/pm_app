@@ -9,43 +9,43 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-class Project(db.Model):
+class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     created_at = db.Column(db.DateTime(timezone=True),
                         server_default=func.now())
 
     def __repr__(self) -> str:
-        return f"<Project: {self.name}>"
+        return f"<Author: {self.name}>"
 
-class Task(db.Model):
+class Paper(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    discription = db.Column(db.String)
-    project_id = db.Column(db.Integer, db.ForeignKey("project.id"))
-    project = db.relationship("Project")
+    text = db.Column(db.String)
+    author_id = db.Column(db.Integer, db.ForeignKey("author.id"))
+    author = db.relationship("Author")
     created_at = db.Column(db.DateTime(timezone=True),
                         server_default=func.now())
 
     def __repr__(self) -> str:
-        return f"<Task: {self.discription}>"
+        return f"<Paper: {self.discription}>"
 
 
 @app.route("/")
-def show_project():
-    projects = Project.query.all()
-    return render_template("index.html", projects=projects)
+def show_author():
+    authors = Author.query.all()
+    return render_template("index.html", authors=authors)
 
-@app.route("/project/<project_id>")
-def show_tasks(project_id):
-    return render_template("project-tasks.html", project_id=project_id)
+@app.route("/author/<author_id>")
+def show_paper(author_id):
+    return render_template("author-paper.html", author_id=author_id)
 
-@app.route("/add/project", methods=["POST"])
-def add_project():
-    # Add project
-    return "Project added successfully!"
+@app.route("/add/author", methods=["POST"])
+def add_author():
+    # Add author
+    return "Author added successfully!"
 
-@app.route("/add/task/<project_id>",methods=["POST"])
-def add_task(project_id):
-    #Add project
-    return f"Taks added successfully to Project {project_id}!"
+@app.route("/add/task/<author_id>",methods=["POST"])
+def add_task(author_id):
+    #Add author
+    return f"Taks added successfully to Author {author_id}!"
 
