@@ -2,14 +2,14 @@ from app import app, db, Author, Paper
 from sqlalchemy.exc import IntegrityError
 from db_connector import DbConnector
 
-dc = DbConnector(app, db)
-a = Author(name="Pupu2")
+name="Pupu2"
 
-dc.add_object(a)
+dc = DbConnector()
+a = Author(name=name)
 
-a = Author.query.filter_by(name="Pupu2").first()
+author_id = dc.add_object(a)
 
-p = Paper(text="hello world!!22222", author_id=a.id)
-dc.add_object(p)
+author_id = Author.query.filter_by(name="Pupu2").first().id
 
+dc.add_paper(id="9876986865876", text="hello world!!22222", author_id=str(author_id))
 print(">>>>>>>>>> done!")
