@@ -1,24 +1,15 @@
 from app import app, db, Author, Paper
 from sqlalchemy.exc import IntegrityError
+from db_connector import DbConnector
 
-app.app_context().push()
-
+dc = DbConnector(app, db)
 a = Author(name="Pupu2")
 
-def db_add_object(obj):
-    try:
-        db.session.add(obj)
-        db.session.commit()
-    except IntegrityError as e:
-        db.session.rollback()
-        print(e)
-
-db_add_object(a)
+dc.add_object(a)
 
 a = Author.query.filter_by(name="Pupu2").first()
 
 p = Paper(text="hello world!!22222", author_id=a.id)
-db.session.add(p)
-db.session.commit()
+dc.add_object(p)
 
 print(">>>>>>>>>> done!")
