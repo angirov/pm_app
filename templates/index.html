@@ -1,21 +1,9 @@
-<html>
-    <body>
-        <h1>Projects:</h1>
+{% extends 'base.html' %}
 
-        <ul>
-            <li><a href="/project/1">Proj 1</a></li>
-            <li><a href="/project/2">Proj 2</a></li>
-            <li><a href="/project/3">Proj 3</a></li>
-        </ul>
-        <br>
-
-        <h3>New project</h3>
-        <form action="/add/project" method="POST">
-            <div>
-                Project name: <input type="text" name="project-title">
-                <br>
-                <input type="submit" value="Add project">
-            </div>
-        </form>
-    </body>
-</html>
+{% block content %}
+    <ul>
+    {% for project in projects %}
+        <li>{{ project.name }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
